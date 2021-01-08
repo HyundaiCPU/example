@@ -3,6 +3,7 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.querySelector("#jsRange");
 const modebtn = document.querySelector("#jsMode");
 const savebtn = document.querySelector("#jsSave");
+const clearbtn = document.querySelector("#jsClear");
 const ctx = canvas.getContext("2d");
 
 canvas.width = 700;
@@ -58,15 +59,23 @@ function handleSaveClick() {
   link.download = "paint.png";
   link.click();
 }
+function handleClearClick() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = "#ffffff";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillStyle = ctx.strokeStyle;
+}
 function handleContext(event) {
   event.preventDefault();
 }
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("contextmenu", handleContext);
+  handleClearClick();
 }
 
 Array.from(colors).forEach((color) =>
@@ -82,4 +91,7 @@ if (modebtn) {
 }
 if (savebtn) {
   savebtn.addEventListener("click", handleSaveClick);
+}
+if (clearbtn) {
+  clearbtn.addEventListener("click", handleClearClick);
 }
